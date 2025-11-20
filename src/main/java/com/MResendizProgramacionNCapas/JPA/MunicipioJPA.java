@@ -18,7 +18,7 @@ public class MunicipioJPA {
     @Id
     @Column(name = "idmunicipio")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int IdMunicioio;
+    private int IdMunicipio;
     
     @Column(name = "nombre")
     private String Nombre;
@@ -29,11 +29,11 @@ public class MunicipioJPA {
     public EstadoJPA EstadoJPA;
     
     public int getIdMunicioio() {
-        return IdMunicioio;
+        return IdMunicipio;
     }
 
     public void setIdMunicioio(int IdMunicioio) {
-        this.IdMunicioio = IdMunicioio;
+        this.IdMunicipio = IdMunicioio;
     }
 
     public String getNombre() {

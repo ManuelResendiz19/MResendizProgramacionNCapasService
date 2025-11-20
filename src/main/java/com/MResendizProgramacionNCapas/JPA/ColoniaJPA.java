@@ -31,6 +31,31 @@ public class ColoniaJPA {
     @JsonIgnore
     public MunicipioJPA MunicipioJPA;
 
+     public void setIdColonia(int IdColonia){
+        this.IdColonia = IdColonia;
+    }
     
+    public int getIdColonia(){
+        return IdColonia;
+    }
+    
+    public void setNombre(String Nombre){
+        this.Nombre = Nombre;
+    }
+    
+    
+    public String getNombre(){
+        return Nombre;
+    }
+    
+    
+    public void setCodigoPostal(String CodigoPostal){
+        this.CodigoPostal = CodigoPostal;
+    }
+    
+    
+    public String getCodigoPostal(){
+        return CodigoPostal;
+    }
     
 }

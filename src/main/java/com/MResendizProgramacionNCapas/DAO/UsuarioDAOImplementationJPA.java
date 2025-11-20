@@ -2,15 +2,10 @@
 package com.MResendizProgramacionNCapas.DAO;
 
 import com.MResendizProgramacionNCapas.JPA.Result;
-import com.MResendizProgramacionNCapas.JPA.DireccionJPA;
-import com.MResendizProgramacionNCapas.JPA.RolJPA;
 import com.MResendizProgramacionNCapas.JPA.UsuarioJPA;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import org.hibernate.sql.exec.ExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Repository;
