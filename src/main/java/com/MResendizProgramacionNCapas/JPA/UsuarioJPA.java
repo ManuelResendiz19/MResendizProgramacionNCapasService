@@ -65,7 +65,7 @@ public class UsuarioJPA {
     
     @ManyToOne
     @JoinColumn(name = "idrols")
-    public RolJPA RolJPA;
+    private RolJPA RolJPA;
     
     @OneToMany(mappedBy = "UsuarioJPA", cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonIgnore
@@ -189,5 +189,15 @@ public class UsuarioJPA {
     public void setImagen(String Imagen) {
         this.Imagen = Imagen;
     }
+
+    public RolJPA getRolJPA() {
+        return RolJPA;
+    }
+
+    public void setRolJPA(RolJPA RolJPA) {
+        this.RolJPA = RolJPA;
+    }
+    
+    
     
 }
