@@ -71,20 +71,6 @@ public class UsuarioJPA {
     @JsonIgnore
     public List<DireccionJPA> DireccionesJPA = new ArrayList<>();
     
-//    public UsuarioJPA (String Nombre, String ApellidoPaterno, String ApellidoMaterno, Date FechaNacimiento, String Username,String Email, String Password, String Sexo, String Telefono, String Celular, String CURP){
-//        this.IdUsuario = IdUsuario;
-//        this.Nombre = Nombre;
-//        this.ApellidoPaterno = ApellidoPaterno;
-//        this.ApellidoMaterno = ApellidoMaterno;
-//        this.FechaNacimiento = FechaNacimiento;
-//        this.Telefono = Telefono;
-//        this.UserName = UserName;
-//        this.Email = Email;
-//        this.Password = Password;
-//        this.Sexo = Sexo;
-//        this.Celular = Celular;
-//        this.CURP = CURP;
-//    }
     
     public int getIdUsuario() {
         return IdUsuario;
@@ -196,6 +182,14 @@ public class UsuarioJPA {
 
     public void setRolJPA(RolJPA RolJPA) {
         this.RolJPA = RolJPA;
+    }
+
+    public List<DireccionJPA> getDireccionesJPA() {
+        return DireccionesJPA;
+    }
+
+    public void setDireccionesJPA(List<DireccionJPA> DireccionesJPA) {
+        this.DireccionesJPA = DireccionesJPA;
     }
     
     

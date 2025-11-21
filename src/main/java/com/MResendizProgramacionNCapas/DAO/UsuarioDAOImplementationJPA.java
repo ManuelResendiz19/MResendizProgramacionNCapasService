@@ -25,7 +25,7 @@ public class UsuarioDAOImplementationJPA implements IUsuarioJPA{
         Result result = new Result();
         try{
             
-            TypedQuery<UsuarioJPA> queryUsuario = entityManager.createQuery("FROM UsuarioJPA", UsuarioJPA.class);
+            TypedQuery<UsuarioJPA> queryUsuario = entityManager.createQuery("SELECT u FROM UsuarioJPA u LEFT JOIN FETCH u.DireccionesJPA", UsuarioJPA.class);
             List<UsuarioJPA> usuarios = queryUsuario.getResultList();
          
             result.object = usuarios;
@@ -86,7 +86,7 @@ public class UsuarioDAOImplementationJPA implements IUsuarioJPA{
      }
 
 
-
+     @Transactional(rollbackFor = Exception.class)
     @Override
     public Result Update(UsuarioJPA usuario) {
         Result result = new Result();
@@ -104,8 +104,11 @@ public class UsuarioDAOImplementationJPA implements IUsuarioJPA{
                 usuario.setRolJPA(roljpa);
             }
             
-            entityManager.merge(usuarioUpda);
-            }  
+            entityManager.merge(usuario);
+            
+            }  else {
+                entityManager.persist(usuario);
+            }
             result.status = 202;
             
         } catch (Exception ex) {

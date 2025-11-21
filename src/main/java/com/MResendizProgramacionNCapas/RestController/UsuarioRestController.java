@@ -97,6 +97,7 @@ public class UsuarioRestController {
            result.correct =false;
            result.errorMessage = "Nose pudo Actualizar el Usuario";
            result.ex = ex;
+           result.status = 500;
        }
        
        return ResponseEntity.status(result.status).body(result);
