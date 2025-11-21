@@ -12,5 +12,5 @@ public interface IUsuarioJPA {
         Result Add(UsuarioJPA usuarioJPA);
         Result GetById(int IdUsuario);
         Result Update(UsuarioJPA usuario);
-        
+        Result Delete(int IdUsuario);
 }

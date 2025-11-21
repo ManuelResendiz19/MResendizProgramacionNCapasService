@@ -84,39 +84,41 @@ public class UsuarioDAOImplementationJPA implements IUsuarioJPA{
     
          return result;
      }
-    
-    
-//    @Transactional(rollbackFor = Exception.class)
-//    @Override
-//    public Result Update(UsuarioJPA usuarioJPA) {
-//        Result result = new Result();
-//        try {
-//            
-//            Optional<UsuarioJPA> usuarioOptional = usuarioRepo.findById(usuario.getIdUsuario());
-//           
-//           if(usuarioOptional.isPresent()){
-//               UsuarioJPA usuarioJPA =  usuarioOptional.get();
-//               UsuarioJPA usuarioUpdate = modelMapper.map(usuario, UsuarioJPA.class);
-//               usuarioUpdate.setPassword(usuarioJPA.getPassword());
-//               usuarioUpdate.setImagen(usuarioJPA.getImagen());
-//               usuarioRepo.save(usuarioUpdate);
-//           }
-//         
-//            result.correct =  true;
-//            
-//        } catch (Exception ex) {
-//            result.correct =  false;
-//            result.errorMessage =  ex.getLocalizedMessage();
-//            result.ex =  ex;
-//        }
-//        
-//        return result;
-//    }
 
 
 
     @Override
     public Result Update(UsuarioJPA usuario) {
+        Result result = new Result();
+        
+        try {
+            
+            UsuarioJPA usuarioUpda = entityManager.find(UsuarioJPA.class, usuario.getIdUsuario());
+            
+            if(usuarioUpda != null){
+            usuario.setPassword(usuarioUpda.getPassword());
+            usuario.setImagen(usuarioUpda.getImagen());
+            
+            if(usuario.getRolJPA() != null){
+                RolJPA roljpa =  entityManager.find(RolJPA.class, usuario.getRolJPA().getIdRols());
+                usuario.setRolJPA(roljpa);
+            }
+            
+            entityManager.merge(usuarioUpda);
+            }  
+            result.status = 202;
+            
+        } catch (Exception ex) {
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.ex = ex;
+        }
+
+        return result;
+    }
+
+    @Override
+    public Result Delete(int IdUsuario) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

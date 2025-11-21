@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,8 +39,9 @@ public class UsuarioRestController {
            result.ex = ex;          
        }
        
-       return ResponseEntity.status(result.status).body(result.object);
+       return ResponseEntity.status(result.status).body(result);
    }
+   
    
     @GetMapping("/{idUsuario}")
     public ResponseEntity GetById(@PathVariable int idUsuario){
@@ -80,5 +82,27 @@ public class UsuarioRestController {
        
        return ResponseEntity.status(result.status).body(result);
    }
+   
+   
+   
+   @PutMapping("/update")
+   public ResponseEntity Update(@RequestBody UsuarioJPA usuarioJPA){
+       Result result = new Result();
+       
+       try {
+           
+           result = usuarioDAOImplementationJPA.Update(usuarioJPA);
+           
+       } catch (Exception ex) {
+           result.correct =false;
+           result.errorMessage = "Nose pudo Actualizar el Usuario";
+           result.ex = ex;
+       }
+       
+       return ResponseEntity.status(result.status).body(result);
+   }
 
+   
+   
+   
 }
