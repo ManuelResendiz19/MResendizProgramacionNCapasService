@@ -86,7 +86,7 @@ public class UsuarioDAOImplementationJPA implements IUsuarioJPA{
      }
 
 
-     @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Result Update(UsuarioJPA usuario) {
         Result result = new Result();
@@ -120,9 +120,30 @@ public class UsuarioDAOImplementationJPA implements IUsuarioJPA{
         return result;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Result Delete(int IdUsuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Result result = new Result();
+        
+        try {
+            
+            UsuarioJPA usuarioJPA = entityManager.find(UsuarioJPA.class, IdUsuario);
+            if(usuarioJPA != null){
+                    result.correct = true;
+                    entityManager.remove(usuarioJPA);                    
+                }else{
+                    result.correct = false;
+                    result.errorMessage = "No se pudo encontrar al usuario" + IdUsuario + "Para Eliminarlo";
+                }
+            
+            result.status = 200;
+        } catch (Exception ex) {
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.ex = ex;
+        }
+        
+        return result;
     }
     
     

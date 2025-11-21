@@ -7,6 +7,7 @@ import com.MResendizProgramacionNCapas.JPA.Result;
 import com.MResendizProgramacionNCapas.JPA.UsuarioJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -104,6 +105,22 @@ public class UsuarioRestController {
    }
 
    
+   
+   @DeleteMapping("/delete/{IdUsuario}")
+   public ResponseEntity Delete(@PathVariable int IdUsuario){
+       Result result = new Result();
+       try {
+           result = usuarioDAOImplementationJPA.Delete(IdUsuario);
+           
+       } catch (Exception ex) {
+           result.correct = false;
+           result.errorMessage = "El Usuario no se pudo eliminar";
+           result.ex = ex;
+           result.status = 500;
+       }
+  
+       return ResponseEntity.status(result.status).body(result);
+   }
    
    
 }
