@@ -6,10 +6,12 @@ import com.MResendizProgramacionNCapas.JPA.DireccionJPA;
 import com.MResendizProgramacionNCapas.JPA.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
     
 @RestController
@@ -54,6 +56,22 @@ public class DireccionRestController {
         return ResponseEntity.status(result.status).body(result);
     }
     
+    
+    @DeleteMapping("/delete/{idDireccion}")
+    public ResponseEntity DireccionDelete(@PathVariable int idDireccion){
+        Result result = new Result();
+        try {
+            
+            result = direccionDAOImplementationJPA.DireccionDelete(idDireccion);
+            
+        } catch (Exception ex) {
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.ex = ex;
+        }
+        
+        return ResponseEntity.status(result.status).body(result);
+    }
     
     
     

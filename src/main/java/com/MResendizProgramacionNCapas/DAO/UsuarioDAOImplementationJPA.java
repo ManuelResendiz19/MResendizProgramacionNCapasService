@@ -1,6 +1,7 @@
 
 package com.MResendizProgramacionNCapas.DAO;
 
+import com.MResendizProgramacionNCapas.JPA.DireccionJPA;
 import com.MResendizProgramacionNCapas.JPA.Result;
 import com.MResendizProgramacionNCapas.JPA.RolJPA;
 import com.MResendizProgramacionNCapas.JPA.UsuarioJPA;
@@ -49,6 +50,9 @@ public class UsuarioDAOImplementationJPA implements IUsuarioJPA{
             
             RolJPA rolJPA = entityManager.find(RolJPA.class, usuarioJPA.getRolJPA().getIdRols());
             usuarioJPA.setRolJPA(rolJPA);
+            
+//            DireccionJPA direccionesJPA = entityManager.find(DireccionJPA.class, usuarioJPA.getDireccionesJPA());
+//            usuarioJPA.setDireccionesJPA(direccionesJPA);
  
             entityManager.persist(usuarioJPA);
             result.correct = true;
