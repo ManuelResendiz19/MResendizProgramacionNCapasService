@@ -26,10 +26,12 @@ public class RolDAOImplementationJPA implements IRolJPA{
          
             result.object = roles;
             result.correct = true;
+            result.status = 200;
             
         } catch (Exception ex) {
-            
-            
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.ex = ex;
         }
         
         return result;

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,8 +32,6 @@ public class UsuarioRestController {
        try {
            
            result = usuarioDAOImplementationJPA.GetAll();
-           result.correct = true;
-           result.status = 200;
            
        } catch (Exception ex) {
            result.correct = false;
@@ -50,8 +49,7 @@ public class UsuarioRestController {
         
         try {
             result = usuarioDAOImplementationJPA.GetById(idUsuario);
-            result.correct = true;
-            result.status = 200;
+            
             
             
         } catch (Exception ex) {
@@ -72,8 +70,6 @@ public class UsuarioRestController {
        
        try {
            result = usuarioDAOImplementationJPA.Add(usuarioJPA);
-           result.correct = true;
-           result.status = 201; 
            
        } catch (Exception ex) {
            result.correct = false;
@@ -122,5 +118,20 @@ public class UsuarioRestController {
        return ResponseEntity.status(result.status).body(result);
    }
    
-   
+   @GetMapping("/busqueda")
+   public ResponseEntity GetAllDynamic(@RequestParam String busqueda){
+       Result result = new Result();
+       
+       try {
+            
+           result = usuarioDAOImplementationJPA.GetAllDynamic(busqueda);
+           
+       } catch (Exception ex) {
+           result.correct = false;
+           result.errorMessage = ex.getLocalizedMessage();
+           result.ex = ex;
+       }
+       
+       return ResponseEntity.status(result.status).body(result);
+   }
 }

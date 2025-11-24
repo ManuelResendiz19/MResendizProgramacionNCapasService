@@ -192,6 +192,4 @@ public class UsuarioJPA {
         this.DireccionesJPA = DireccionesJPA;
     }
     
-    
-    
 }

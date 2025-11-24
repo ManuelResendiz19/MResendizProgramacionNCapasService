@@ -75,23 +75,6 @@ public class DireccionJPA {
     public void setNumeroExterior(String NumeroExterior) {
         this.NumeroExterior = NumeroExterior;
     }
-
-    public UsuarioJPA getUsuarioJPA() {
-        return UsuarioJPA;
-    }
-
-    public void setUsuarioJPA(UsuarioJPA UsuarioJPA) {
-        this.UsuarioJPA = UsuarioJPA;
-    }
-
-    
-    public ColoniaJPA getColoniaJPA() {
-        return ColoniaJPA;
-    }
-
-    public void setColoniaJPA(ColoniaJPA ColoniaJPA) {
-        this.ColoniaJPA = ColoniaJPA;
-    }
     
     
 }

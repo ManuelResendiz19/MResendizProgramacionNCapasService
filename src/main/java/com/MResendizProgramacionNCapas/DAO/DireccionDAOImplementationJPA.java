@@ -24,11 +24,11 @@ public class DireccionDAOImplementationJPA implements IDireccionJPA{
         Result result = new Result();     
         try{
             
-            ColoniaJPA coloniaJPA = entityManager.find(ColoniaJPA.class, direccionJPA.getColoniaJPA().getIdColonia());
-            direccionJPA.setColoniaJPA(coloniaJPA);
-            
-            UsuarioJPA usuarioJPA = entityManager.find(UsuarioJPA.class, direccionJPA.getUsuarioJPA().getIdUsuario());
-            direccionJPA.setUsuarioJPA(usuarioJPA);
+//            ColoniaJPA coloniaJPA = entityManager.find(ColoniaJPA.class, direccionJPA.getColoniaJPA().getIdColonia());
+//            direccionJPA.setColoniaJPA(coloniaJPA);
+//            
+//            UsuarioJPA usuarioJPA = entityManager.find(UsuarioJPA.class, direccionJPA.getUsuarioJPA().getIdUsuario());
+//            direccionJPA.setUsuarioJPA(usuarioJPA);
             
             entityManager.persist(direccionJPA);
             result.correct = true;

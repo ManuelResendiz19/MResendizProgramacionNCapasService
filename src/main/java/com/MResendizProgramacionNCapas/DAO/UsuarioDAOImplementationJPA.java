@@ -31,6 +31,7 @@ public class UsuarioDAOImplementationJPA implements IUsuarioJPA{
          
             result.object = usuarios;
             result.correct = true;
+            result.status = 200;
             
             
         }catch(Exception ex){
@@ -76,8 +77,9 @@ public class UsuarioDAOImplementationJPA implements IUsuarioJPA{
                 
                 UsuarioJPA usuarioJPA = entityManager.find(UsuarioJPA.class, IdUsuario);
                 if(usuarioJPA != null){
-                    result.correct = true;
                     result.object = usuarioJPA;
+                    result.correct = true;
+                    result.status = 200;
                 }
         } catch (Exception ex) {
             result.correct =  false;
@@ -151,9 +153,32 @@ public class UsuarioDAOImplementationJPA implements IUsuarioJPA{
     }
     
     
+    @Override
+    public Result GetAllDynamic(String Busqueda) {
+        Result result = new Result();
+        try {
 
+            String jpql = "SELECT u FROM UsuarioJPA u";
+            if (Busqueda != null && !Busqueda.trim().isEmpty()) {
+                jpql += " WHERE LOWER(u.Nombre) LIKE :patron OR LOWER(u.ApellidoPaterno) LIKE :patron OR LOWER(u.ApellidoMaterno) LIKE :patron";
+            }
+            TypedQuery<UsuarioJPA> queryUsuario = entityManager.createQuery(jpql, UsuarioJPA.class);
+            if (Busqueda != null && !Busqueda.trim().isEmpty()) {
+                queryUsuario.setParameter("patron", "%" + Busqueda.toLowerCase() + "%");
+            }
 
-    
-    
-    
+            List<UsuarioJPA> usuarios = queryUsuario.getResultList();
+
+            result.object = usuarios;
+            result.correct = true;
+            result.status = 200;
+
+        }catch(Exception ex){
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.ex = ex;
+        }
+        return result;
+    }
+
 }

@@ -32,7 +32,7 @@ public class RolRestController {
            result.ex = ex;          
        }
        
-       return ResponseEntity.status(result.status).body(result.object);
+       return ResponseEntity.status(result.status).body(result);
    }
     
 }
