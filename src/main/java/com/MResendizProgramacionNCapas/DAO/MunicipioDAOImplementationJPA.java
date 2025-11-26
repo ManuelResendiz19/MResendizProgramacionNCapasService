@@ -17,7 +17,7 @@ public class MunicipioDAOImplementationJPA implements IMunicipioJPA{
     
     
     @Override
-    public Result MunicipioGetByIdPais(int IdEstado) {
+    public Result MunicipioGetByIdEstado(int IdEstado) {
         Result result = new Result();
         
         try {

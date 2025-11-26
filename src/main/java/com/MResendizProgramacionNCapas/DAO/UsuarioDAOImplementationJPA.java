@@ -154,17 +154,17 @@ public class UsuarioDAOImplementationJPA implements IUsuarioJPA{
     
     
     @Override
-    public Result GetAllDynamic(String Busqueda) {
+    public Result GetAllDynamic(String busqueda) {
         Result result = new Result();
         try {
 
             String jpql = "SELECT u FROM UsuarioJPA u";
-            if (Busqueda != null && !Busqueda.trim().isEmpty()) {
+            if (busqueda != null && !busqueda.trim().isEmpty()) {
                 jpql += " WHERE LOWER(u.Nombre) LIKE :patron OR LOWER(u.ApellidoPaterno) LIKE :patron OR LOWER(u.ApellidoMaterno) LIKE :patron";
             }
             TypedQuery<UsuarioJPA> queryUsuario = entityManager.createQuery(jpql, UsuarioJPA.class);
-            if (Busqueda != null && !Busqueda.trim().isEmpty()) {
-                queryUsuario.setParameter("patron", "%" + Busqueda.toLowerCase() + "%");
+            if (busqueda != null && !busqueda.trim().isEmpty()) {
+                queryUsuario.setParameter("patron", "%" + busqueda.toLowerCase() + "%");
             }
 
             List<UsuarioJPA> usuarios = queryUsuario.getResultList();

@@ -6,5 +6,5 @@ import com.MResendizProgramacionNCapas.JPA.Result;
 
 
 public interface IMunicipioJPA {
-    Result MunicipioGetByIdPais(int IdEstado);
+    Result MunicipioGetByIdEstado(int IdEstado);
 }

@@ -123,7 +123,7 @@ public class UsuarioRestController {
        Result result = new Result();
        
        try {
-            
+           
            result = usuarioDAOImplementationJPA.GetAllDynamic(busqueda);
            
        } catch (Exception ex) {

@@ -5,6 +5,7 @@ import com.MResendizProgramacionNCapas.DAO.ColoniaDAOImplementationJPA;
 import com.MResendizProgramacionNCapas.JPA.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/colonia")
+@CrossOrigin(origins = "http://localhost:8081" )
 public class ColoniaRestController {
 
     @Autowired
@@ -31,7 +33,7 @@ public class ColoniaRestController {
            result.status = 500;
        }
        
-       return ResponseEntity.status(result.status).body(result.object);
+       return ResponseEntity.status(result.status).body(result.objects);
    }
    
    
@@ -49,7 +51,7 @@ public class ColoniaRestController {
            result.status = 500;
        }
        
-       return ResponseEntity.status(result.status).body(result.object);
+       return ResponseEntity.status(result.status).body(result);
    }
     
 }

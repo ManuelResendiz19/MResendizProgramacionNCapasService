@@ -4,6 +4,7 @@ import com.MResendizProgramacionNCapas.DAO.EstadoDAOImplementationJPA;
 import com.MResendizProgramacionNCapas.JPA.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/estado")
+@CrossOrigin(origins = "http://localhost:8081" )
 public class EstadoRestController {
 
     @Autowired
     private EstadoDAOImplementationJPA estadoDAOImplementationJPA;
     
-    @GetMapping("/estado/{idPais}")
+    @GetMapping("/{idPais}")
    public ResponseEntity EstadosGetByIdPais(@PathVariable int idPais){
        Result result = new Result();
        
