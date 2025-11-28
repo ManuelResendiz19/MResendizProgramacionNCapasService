@@ -33,7 +33,7 @@ public class ColoniaRestController {
            result.status = 500;
        }
        
-       return ResponseEntity.status(result.status).body(result.objects);
+       return ResponseEntity.status(result.status).body(result.object);
    }
    
    

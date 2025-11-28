@@ -29,9 +29,6 @@ public class ColoniaJPA {
     @Column(name = "codigopostal")
     private String CodigoPostal;
     
-    @OneToMany(mappedBy = "ColoniaJPA")
-    @JsonIgnore
-    private List<DireccionJPA> direcciones = new ArrayList<>();
     
     @ManyToOne
     @JoinColumn(name = "idmunicipio")

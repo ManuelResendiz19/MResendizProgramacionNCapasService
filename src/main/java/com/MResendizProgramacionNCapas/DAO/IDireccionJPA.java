@@ -4,6 +4,7 @@ package com.MResendizProgramacionNCapas.DAO;
 
 import com.MResendizProgramacionNCapas.JPA.DireccionJPA;
 import com.MResendizProgramacionNCapas.JPA.Result;
+import com.MResendizProgramacionNCapas.JPA.UsuarioJPA;
 
 
 public interface IDireccionJPA {

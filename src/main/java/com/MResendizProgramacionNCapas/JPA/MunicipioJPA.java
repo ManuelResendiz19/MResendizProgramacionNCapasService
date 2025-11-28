@@ -28,12 +28,12 @@ public class MunicipioJPA {
     @JsonIgnore
     public EstadoJPA EstadoJPA;
     
-    public int getIdMunicioio() {
+    public int getIdMunicipio() {
         return IdMunicipio;
     }
 
-    public void setIdMunicioio(int IdMunicioio) {
-        this.IdMunicipio = IdMunicioio;
+    public void setIdMunicipio(int IdMunicipio) {
+        this.IdMunicipio = IdMunicipio;
     }
 
     public String getNombre() {

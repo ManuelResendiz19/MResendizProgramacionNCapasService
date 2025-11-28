@@ -2,7 +2,10 @@
 package com.MResendizProgramacionNCapas.RestController;
 
 
+import com.MResendizProgramacionNCapas.DAO.DireccionDAOImplementationJPA;
 import com.MResendizProgramacionNCapas.DAO.UsuarioDAOImplementationJPA;
+import com.MResendizProgramacionNCapas.JPA.ColoniaJPA;
+import com.MResendizProgramacionNCapas.JPA.DireccionJPA;
 import com.MResendizProgramacionNCapas.JPA.Result;
 import com.MResendizProgramacionNCapas.JPA.UsuarioJPA;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,9 @@ public class UsuarioRestController {
 
     @Autowired
     private UsuarioDAOImplementationJPA usuarioDAOImplementationJPA;
+    
+    @Autowired
+    private DireccionDAOImplementationJPA direccionDAOImplementationJPA;
 
     
    @GetMapping
@@ -70,6 +76,17 @@ public class UsuarioRestController {
        
        try {
            result = usuarioDAOImplementationJPA.Add(usuarioJPA);
+           
+//           DireccionJPA direccion = new DireccionJPA();
+//           UsuarioJPA usuariopersist = new UsuarioJPA();
+//           usuariopersist = (UsuarioJPA) result.object;
+           
+//           direccion.UsuarioJPA = new UsuarioJPA();
+//           direccion.ColoniaJPA = new ColoniaJPA();
+//           direccion.UsuarioJPA.setIdUsuario(usuariopersist.getIdUsuario());
+//           direccion.ColoniaJPA.setIdColonia(usuarioJPA.DireccionesJPA.get(0).ColoniaJPA.getIdColonia());
+//          direccionDAOImplementationJPA.DireccionAdd(direccion);
+           
            
        } catch (Exception ex) {
            result.correct = false;

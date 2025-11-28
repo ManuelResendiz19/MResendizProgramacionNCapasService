@@ -24,6 +24,15 @@ public class DireccionDAOImplementationJPA implements IDireccionJPA{
         Result result = new Result();     
         try{
             
+            //Agreagador de Usuario
+           // entityManager.persist(usuarioJPA);
+            
+//            DireccionJPA direccion = usuarioJPA.DireccionesJPA.get(0);
+//            direccion.ColoniaJPA = new ColoniaJPA();
+//            direccion.UsuarioJPA = new UsuarioJPA();
+//            direccion.ColoniaJPA.setIdColonia(usuarioJPA.DireccionesJPA.get(0).ColoniaJPA.getIdColonia());
+//            direccion.UsuarioJPA.setIdUsuario(usuarioJPA.getIdUsuario());
+//            
 //            ColoniaJPA coloniaJPA = entityManager.find(ColoniaJPA.class, direccionJPA.getColoniaJPA().getIdColonia());
 //            direccionJPA.setColoniaJPA(coloniaJPA);
 //            
@@ -31,6 +40,8 @@ public class DireccionDAOImplementationJPA implements IDireccionJPA{
 //            direccionJPA.setUsuarioJPA(usuarioJPA);
             
             entityManager.persist(direccionJPA);
+            entityManager.flush();
+            
             result.correct = true;
             result.status = 201;
        

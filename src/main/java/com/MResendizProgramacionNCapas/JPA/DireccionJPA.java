@@ -2,6 +2,8 @@
 package com.MResendizProgramacionNCapas.JPA;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -38,6 +40,7 @@ public class DireccionJPA {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idcolonia")
+    @JsonProperty("Colonia")
     @JsonIgnore
     public ColoniaJPA ColoniaJPA;
 
@@ -75,6 +78,22 @@ public class DireccionJPA {
     public void setNumeroExterior(String NumeroExterior) {
         this.NumeroExterior = NumeroExterior;
     }
+
+//    public UsuarioJPA getUsuarioJPA() {
+//        return UsuarioJPA;
+//    }
+//
+//    public void setUsuarioJPA(UsuarioJPA UsuarioJPA) {
+//        this.UsuarioJPA = UsuarioJPA;
+//    }
+//
+//    public ColoniaJPA getColoniaJPA() {
+//        return ColoniaJPA;
+//    }
+//
+//    public void setColoniaJPA(ColoniaJPA ColoniaJPA) {
+//        this.ColoniaJPA = ColoniaJPA;
+//    }
     
     
 }

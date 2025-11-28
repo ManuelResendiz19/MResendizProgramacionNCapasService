@@ -68,7 +68,6 @@ public class UsuarioJPA {
     private RolJPA RolJPA;
     
     @OneToMany(mappedBy = "UsuarioJPA", cascade = CascadeType.ALL,orphanRemoval = true)
-    @JsonIgnore
     public List<DireccionJPA> DireccionesJPA = new ArrayList<>();
     
     
