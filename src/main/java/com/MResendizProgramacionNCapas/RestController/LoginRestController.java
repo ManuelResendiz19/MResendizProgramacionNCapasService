@@ -33,6 +33,7 @@ public class LoginRestController {
                 )
             );
 
+      
         
         
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();

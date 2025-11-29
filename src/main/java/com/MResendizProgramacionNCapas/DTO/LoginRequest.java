@@ -7,6 +7,10 @@ public class LoginRequest {
     private String username;
     private String Password;
 
+    public LoginRequest (){
+        
+    }
+    
     public LoginRequest(String username, String Password){
         this.username = username;
         this.Password = Password;

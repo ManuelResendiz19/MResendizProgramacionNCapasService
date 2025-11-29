@@ -25,15 +25,27 @@ public class SpringSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(configurer -> configurer
+        http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(configurer -> configurer
                 .requestMatchers("/api/auth/login").permitAll()
-                .anyRequest().permitAll()
-//                //                .anyRequest()
-//                .authenticated())
-//                .formLogin(form -> form
-//                .defaultSuccessUrl("/usuario", true)
-                ).httpBasic(Customizer.withDefaults())
-                .userDetailsService(usuarioDetailsJPAService);
+                .anyRequest().authenticated()).addFilterBefore(filter, beforeFilter);
+                
+                .formLogin(form -> form
+                .loginPage("/api/auth/login").
+//                .successHandler((request, response, authentication) -> {
+//                    String redirectUrl = "/default";
+//                    if (authentication.getAuthorities().stream()
+//                        .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+//                    redirectUrl = "http://localhost:8081/usuario"; // va a la ruta GetAll del cliente, lo puse esto comentado para no perderme :b
+//                } else {
+//                    redirectUrl = "http://localhost:8081/detail"; // van a la ruta Detal en el cliente
+//                }
+//                    response.sendRedirect(redirectUrl);
+//                })
+                        .usernameParameter("username").
+                        .passwordEncoder("password")
+                        .defaultSuccessUrl("/home", true)
+                );
 
         return http.build();
     }
