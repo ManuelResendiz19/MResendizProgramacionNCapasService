@@ -1,9 +1,12 @@
     
 package com.MResendizProgramacionNCapas.RestController;
 
-import com.MResendizProgramacionNCapas.DTO.LoginRequest;
+import com.MResendizProgramacionNCapas.Login.LoginRequest;
+import com.MResendizProgramacionNCapas.Login.LoginResponse;
 import com.MResendizProgramacionNCapas.Service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -25,22 +28,31 @@ public class LoginRestController {
     JwtService jwtService;
     
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<LoginResponse>  login(@RequestBody LoginRequest loginRequest){
+        try{
         Authentication authentication = authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(
                 loginRequest.getUsername(),
                 loginRequest.getPassword()
                 )
             );
-
-      
-        
-        
+ 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         
-        String Token = jwtService.generatedToken(userDetails);
-        
-        return ResponseEntity.ok(Token);
+        String rol = userDetails.getAuthorities()
+                .iterator().next().getAuthority();
+         
+        if (rol.startsWith("ROLE_")) {
+            rol = rol.substring(5); 
+        }
+                
+        LoginResponse response = jwtService.generateLoginResponse(userDetails, rol);
+       
+        // agregar boton de verificar
+        return ResponseEntity.ok(response);
+        }catch(Exception ex){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
     }
     
     

@@ -32,13 +32,13 @@ public class UsuarioDetailsJPAService  implements UserDetailsService{
 
     System.out.println("Usuario encontrado: " + usuario.getUserName());
         
-//        List<GrantedAuthority> authorities = List.of(
-//        new SimpleGrantedAuthority("ROLE_" + usuario.getRolJPA().getNombreRol().toUpperCase())
-//        );
+        List<GrantedAuthority> authorities = List.of(
+        new SimpleGrantedAuthority("ROLE_" + usuario.getRolJPA().getNombreRol().toUpperCase())
+        );
         
         return User.withUsername(usuario.getUserName())
                 .password(usuario.getPassword())
-//                .authorities(authorities)
+                .authorities(authorities)
                 .build();
     }
 

@@ -1,62 +1,75 @@
 package com.MResendizProgramacionNCapas.Configuration;
 
+import com.MResendizProgramacionNCapas.JWT.JwtAuthFilter;
+import com.MResendizProgramacionNCapas.Service.JwtService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import com.MResendizProgramacionNCapas.Service.UsuarioDetailsJPAService;
+import io.jsonwebtoken.security.Keys;
+import javax.crypto.SecretKey;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
     private final UsuarioDetailsJPAService usuarioDetailsJPAService;
+    private final SecurityConfigProperties securityConfigProperties;
 
-    public SpringSecurityConfig(UsuarioDetailsJPAService usuarioDetailsJPAService1) {
-        this.usuarioDetailsJPAService = usuarioDetailsJPAService1;
+    public SpringSecurityConfig(SecurityConfigProperties securityConfigProperties,UsuarioDetailsJPAService usuarioDetailsJPAService) {
+        this.securityConfigProperties = securityConfigProperties;
+        this.usuarioDetailsJPAService = usuarioDetailsJPAService;        
     }
+   
+    
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
 
-        http.csrf(csrf -> csrf.disable())
+        http.cors(Customizer.withDefaults())
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(configurer -> configurer
                 .requestMatchers("/api/auth/login").permitAll()
-                .anyRequest().authenticated()).addFilterBefore(filter, beforeFilter);
+                .requestMatchers("/usuario/detail").hasAnyRole("SUPERVISOR", "USUARIO", "CLIENTE")
+                .requestMatchers("/usuario").hasRole( "ADMIN")
                 
-                .formLogin(form -> form
-                .loginPage("/api/auth/login").
-//                .successHandler((request, response, authentication) -> {
-//                    String redirectUrl = "/default";
-//                    if (authentication.getAuthorities().stream()
-//                        .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-//                    redirectUrl = "http://localhost:8081/usuario"; // va a la ruta GetAll del cliente, lo puse esto comentado para no perderme :b
-//                } else {
-//                    redirectUrl = "http://localhost:8081/detail"; // van a la ruta Detal en el cliente
-//                }
-//                    response.sendRedirect(redirectUrl);
-//                })
-                        .usernameParameter("username").
-                        .passwordEncoder("password")
-                        .defaultSuccessUrl("/home", true)
-                );
+                .anyRequest().authenticated()                       
+                )
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);       
+                
 
         return http.build();
     }
-
+ 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
+    }
+    
+    
+    private AuthenticationProvider authenticationProvider(){
+        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        final DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder);
+        provider.setUserDetailsService(usuarioDetailsJPAService);
+        return provider;
     }
 }

@@ -1,11 +1,15 @@
 package com.MResendizProgramacionNCapas.Service;
 
+import com.MResendizProgramacionNCapas.Login.LoginResponse;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import static io.jsonwebtoken.Jwts.claims;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
@@ -14,10 +18,13 @@ import java.util.Map;
 import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component
 public class JwtService {
 
+    
     @Value("${jwt.secret}")
     private String secret;
     
@@ -30,7 +37,7 @@ public class JwtService {
     }
     
     
-    public <T> T extractClaim(String Token , Function<Claims, T> claimsResolver){
+    private <T> T extractClaim(String Token , Function<Claims, T> claimsResolver){
         final Claims claims= extractAllClaims(Token);
         return claimsResolver.apply(claims);
     }
@@ -53,6 +60,7 @@ public class JwtService {
             return Jwts.builder()
                     .setClaims(extraClaims)
                     .setSubject(userDetails.getUsername())
+                    .setId(java.util.UUID.randomUUID().toString())
                     .setIssuedAt(new Date(System.currentTimeMillis()))
                     .setExpiration(new Date(System.currentTimeMillis() + expiration))
                     .signWith(getSignInKey(), SignatureAlgorithm.HS256)
@@ -66,6 +74,10 @@ public class JwtService {
 
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
+    }
+    
+    public Date extractCreatedAt(String token) {
+        return extractClaim(token, Claims::getIssuedAt);
     }
 
     private Date extractExpiration(String token) {
@@ -86,4 +98,10 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
+    public LoginResponse generateLoginResponse(UserDetails userDetails, String  rol) {
+        String token = generatedToken(userDetails);
+        Date createdAt = extractCreatedAt(token);
+        Date expiresAt = extractExpiration(token);
+        return new LoginResponse(token, createdAt, expiresAt,rol);
+    }
 }

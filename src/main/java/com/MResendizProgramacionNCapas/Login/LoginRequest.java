@@ -1,5 +1,5 @@
 
-package com.MResendizProgramacionNCapas.DTO;
+package com.MResendizProgramacionNCapas.Login;
 
 
 public class LoginRequest {
