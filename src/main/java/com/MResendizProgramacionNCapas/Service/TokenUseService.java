@@ -10,8 +10,12 @@ public class TokenUseService {
 
     private final Map<String, Integer> useMap = new ConcurrentHashMap<>()  ;
     
-    public int incrementUse(String jti){
-        return useMap.merge(jti, 1, Integer:: sum);
+    private static final int MAX_USE = 5;
+    
+    public boolean incrementUse(String jti){
+        int use = useMap.merge(jti, 1, Integer:: sum);
+        
+        return use <= MAX_USE;
     }
     
     

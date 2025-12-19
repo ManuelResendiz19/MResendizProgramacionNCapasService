@@ -63,6 +63,9 @@ public class UsuarioJPA {
     @Column(name = "imagen")
     private String Imagen;
     
+//    @Column(name ="isVerified")
+//    private int IsVerified;
+    
     @ManyToOne
     @JoinColumn(name = "idrols")
     private RolJPA RolJPA;
@@ -190,5 +193,14 @@ public class UsuarioJPA {
     public void setDireccionesJPA(List<DireccionJPA> DireccionesJPA) {
         this.DireccionesJPA = DireccionesJPA;
     }
+
+//    public int getIsVerified() {
+//        return IsVerified;
+//    }
+//
+//    public void setIsVerified(int IsVerified) {
+//        this.IsVerified = IsVerified;
+//    }
     
+     
 }
