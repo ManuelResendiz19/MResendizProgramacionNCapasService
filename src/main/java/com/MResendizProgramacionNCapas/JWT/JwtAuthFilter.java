@@ -34,7 +34,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String path = request.getServletPath();
 
         return path.startsWith("/api/email")
-                /*|| path.startsWith("/api/auth") */;
+                || path.startsWith("/api/auth") ;
     }
 
     @Override
@@ -51,7 +51,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         String jwt = authHeader.substring(7);
-        String username = jwtService.extractUsername(jwt);
+        String username;
+
+        try {
+            username = jwtService.extractUsername(jwt);
+        } catch (Exception e) {
+            System.out.println("❌ ERROR JWT: " + e.getClass().getSimpleName());
+            System.out.println("❌ MENSAJE: " + e.getMessage());
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         if (username != null
                 && SecurityContextHolder.getContext().getAuthentication() == null) {

@@ -45,9 +45,9 @@ public class SpringSecurityConfig {
                 .requestMatchers("/api/email/verification").permitAll()
                 .requestMatchers("/usuario/detail").hasAnyRole("SUPERVISOR", "USUARIO", "CLIENTE")
                 .requestMatchers("/usuario", "/usuario/add").hasRole( "ADMIN")
-                .requestMatchers("/api/pais", "/api/estado", "/api/municipio", "/api/colonia", "/api/rol").hasRole("ADMIN")        
-                
-                
+                .requestMatchers("/api/usuario", "/api/usuario/add").hasRole("ADMIN")
+                .requestMatchers("/api/pais", "/api/estado/**", "/api/municipio/**", "/api/colonia/**", "/api/rol").hasRole("ADMIN")        
+         
                 .anyRequest().authenticated()                       
                 )
                 .authenticationProvider(authenticationProvider())
@@ -61,19 +61,17 @@ public class SpringSecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-    
-    
-    private AuthenticationProvider authenticationProvider(){
-        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        final DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(passwordEncoder);
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(usuarioDetailsJPAService);
+        provider.setPasswordEncoder(passwordEncoder()); 
         return provider;
     }
 }

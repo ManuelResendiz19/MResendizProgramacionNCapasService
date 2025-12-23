@@ -48,7 +48,7 @@ public class LoginRestController {
                 
         LoginResponse response = jwtService.generateLoginResponse(userDetails, rol);
        
-        // agregar boton de verificar
+
         return ResponseEntity.ok(response);
         }catch(Exception ex){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
