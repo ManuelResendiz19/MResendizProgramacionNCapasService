@@ -63,8 +63,8 @@ public class UsuarioJPA {
     @Column(name = "imagen")
     private String Imagen;
     
-//    @Column(name ="isVerified")
-//    private int IsVerified;
+    @Column(name ="ISVERIFIED")
+    private int IsVerified;
     
     @ManyToOne
     @JoinColumn(name = "idrols")
@@ -194,13 +194,15 @@ public class UsuarioJPA {
         this.DireccionesJPA = DireccionesJPA;
     }
 
-//    public int getIsVerified() {
-//        return IsVerified;
-//    }
-//
-//    public void setIsVerified(int IsVerified) {
-//        this.IsVerified = IsVerified;
-//    }
+    public int getIsVerified() {
+        return IsVerified;
+    }
+
+    public void setIsVerified(int IsVerified) {
+        this.IsVerified = IsVerified;
+    }
+
+    
     
      
 }

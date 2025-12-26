@@ -17,9 +17,7 @@ public class UsuarioDAOImplementationJPA implements IUsuarioJPA{
 
     @Autowired
     private EntityManager entityManager;
-    
-    
-   
+
     
     @Override
     public Result GetAll() {
